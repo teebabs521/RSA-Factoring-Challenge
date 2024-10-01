@@ -1,0 +1,48 @@
+#!/bin/bash
+
+check_factor()
+{
+	if [ $# -ne 3 ];
+        then
+                args=("$@")
+                i=0
+                q=1
+                for a in ${args[*]};
+                do
+                        if [ $i -gt 1 ];
+                        then
+                                q=$(echo $a*$q | bc)
+                        fi
+                        i=$((i + 1))
+                done
+        else
+                q=$3
+        fi
+
+        p=$2
+        num=$(echo "$1" | tr ':' '=')
+
+        factors=$(echo "if($q > $p) 1 else 0" | bc)
+	        if ((factors == 1)); then
+		        numcp=$p
+		        p=$q
+		        q=$numcp
+                fi
+
+        echo "$num$p*$q"
+}
+
+if [ $# -ne 1 ]
+then
+        echo 'Usage: factors <file>'
+        exit 1
+else
+
+        while read i
+        do
+
+                factors=$(factor "$i")
+                check_factor $factors
+
+        done < "$1"
+fi

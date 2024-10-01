@@ -1,0 +1,34 @@
+#!/usr/bin/python3
+
+from sys import argv
+from math import sqrt
+
+class factor_file:
+    def __init__(self, filename):
+        if filename is not None:
+            self.filename = filename
+
+    def read_test_file(self):
+        with open(self.filename, encoding="utf-8") as file:
+            lines = file.readlines()
+
+        number_to_factor = []
+
+        for line in lines:
+            number_to_factor.append(int(line))
+
+        return number_to_factor
+
+    def find_numbers(self, n):
+        for i in range(2, n):
+            if n == ((n // i) * i):
+                print("{}={}*{}".format(n, (n // i), i))
+                break
+
+    def factors(self):
+        ls = self.read_test_file()
+        for n in ls:
+            self.find_numbers(n)
+
+for i in range(1, len(argv)):
+    factor_file(argv[i]).factors()

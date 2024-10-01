@@ -1,0 +1,35 @@
+#!/usr/bin/env python3
+
+from sys import argv
+from math import sqrt
+
+
+def read_test_file(file_name):
+    """Function to read number from file: one number per file"""
+
+    with open(file_name, "r", encoding="utf-8") as file:
+        lines = file.readlines()
+
+    number_to_factor = []
+
+    for line in lines:
+        number_to_factor.append(int(line.strip()))
+
+    return number_to_factor
+
+def find_numbers(n):
+    """Function to find factors of current number"""
+
+    for i in range(1, n):
+        if n == ((n // i) * i):
+            print("{}={}*{}".format(n, (n // i), i))
+            break
+
+def factors(ls):
+    """Function to iterate between numbers in file"""
+
+    for i in ls:
+        find_numbers(i)
+
+if len(argv) == 2:
+    factors(read_test_file(argv[1]))
